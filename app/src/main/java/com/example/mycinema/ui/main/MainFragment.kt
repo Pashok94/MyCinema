@@ -13,6 +13,7 @@ import com.example.mycinema.Model.Film
 import com.example.mycinema.R
 import com.example.mycinema.databinding.MainFragmentBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textview.MaterialTextView
 
 class MainFragment : Fragment() {
     private var binding: MainFragmentBinding? = null
@@ -47,6 +48,9 @@ class MainFragment : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 val film = appState.film
+                val tv: MaterialTextView = MaterialTextView(context!!)
+                tv.text = "${film.title} about ${film.description} with rating ${film.rating}"
+                binding!!.mainView.addView(tv)
                 binding!!.loadingLayout.visibility = View.GONE
                 Snackbar.make(binding!!.mainView, "Success", Snackbar.LENGTH_LONG).show()
             }
