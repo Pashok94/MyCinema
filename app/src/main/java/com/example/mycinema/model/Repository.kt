@@ -1,4 +1,4 @@
-package com.example.mycinema.Model
+package com.example.mycinema.model
 
 interface Repository {
     fun getFilmsFromServer(): ArrayList<Film>

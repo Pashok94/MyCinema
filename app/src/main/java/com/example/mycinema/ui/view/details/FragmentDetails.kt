@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.mycinema.Model.Film
+import com.example.mycinema.model.Film
 import com.example.mycinema.databinding.FragmentFilmDetailsBinding
 
 class FragmentDetails : Fragment() {
@@ -16,7 +16,7 @@ class FragmentDetails : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFilmDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }

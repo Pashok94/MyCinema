@@ -27,7 +27,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_slideshow" />
+        app:srcCompat="@android:drawable/ic_menu_slideshow"
+        android:contentDescription="@string/film_poster" />
 
     <TextView
         android:id="@+id/film_description"

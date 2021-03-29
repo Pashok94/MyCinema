@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mycinema.AppState
-import com.example.mycinema.Model.DB
-import com.example.mycinema.Model.Repository
+import com.example.mycinema.model.DB
+import com.example.mycinema.model.Repository
 import java.lang.Thread.sleep
 
 class MainViewModel(

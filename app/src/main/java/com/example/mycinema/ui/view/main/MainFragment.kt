@@ -9,13 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycinema.AppState
-import com.example.mycinema.Model.Film
+import com.example.mycinema.model.Film
 import com.example.mycinema.R
 import com.example.mycinema.databinding.MainFragmentBinding
 import com.example.mycinema.ui.view.MainViewModel
 import com.example.mycinema.ui.view.details.FragmentDetails
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.main_activity.view.*
 
 class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null

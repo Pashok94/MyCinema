@@ -1,6 +1,6 @@
-package com.example.mycinema.Model
+package com.example.mycinema.model
 
-object DB : Repository{
+object DB : Repository {
     private val db: ArrayList<Film> = arrayListOf(
         Film("film1", "film description", 1),
         Film("film2", "film description", 1),
@@ -23,6 +23,7 @@ object DB : Repository{
         Film("film19", "film description", 1),
         Film("film20", "film description", 1)
     )
+
     override fun getFilmsFromServer(): ArrayList<Film> {
         return db
     }
