@@ -3,7 +3,7 @@ package com.example.mycinema
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mycinema.databinding.MainActivityBinding
-import com.example.mycinema.ui.main.MainFragment
+import com.example.mycinema.ui.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainActivityBinding
