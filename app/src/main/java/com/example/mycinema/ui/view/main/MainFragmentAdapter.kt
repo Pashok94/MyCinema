@@ -1,12 +1,10 @@
 package com.example.mycinema.ui.view.main
 
 import android.view.LayoutInflater
-import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mycinema.Model.Film
+import com.example.mycinema.model.Film
 import com.example.mycinema.R
 import com.example.mycinema.databinding.FragmentMainRecyclerItemBinding
 

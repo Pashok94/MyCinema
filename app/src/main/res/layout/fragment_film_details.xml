@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,6 +9,7 @@
         android:layout_width="350dp"
         android:layout_height="300dp"
         android:layout_marginTop="24dp"
+        android:contentDescription="@string/film_poster"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,14 +18,13 @@
 
     <TextView
         android:id="@+id/film_title"
-        android:layout_width="278dp"
-        android:layout_height="41dp"
+        android:layout_width="270dp"
+        android:layout_height="40dp"
+        android:gravity="center"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/film_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/film_poster"
         app:layout_constraintTop_toBottomOf="@+id/film_poster" />
 
     <TextView
@@ -38,4 +37,17 @@
         app:layout_constraintEnd_toEndOf="@+id/film_poster"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/film_poster" />
+
+    <TextView
+        android:id="@+id/film_rating"
+        android:layout_width="53dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/film_description"
+        app:layout_constraintEnd_toEndOf="@+id/film_poster"
+        app:layout_constraintStart_toEndOf="@+id/film_title"
+        app:layout_constraintTop_toBottomOf="@+id/film_poster"
+        app:layout_constraintVertical_bias="0.54" />
 </androidx.constraintlayout.widget.ConstraintLayout>

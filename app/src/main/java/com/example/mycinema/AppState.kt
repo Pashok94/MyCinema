@@ -1,6 +1,6 @@
 package com.example.mycinema
 
-import com.example.mycinema.Model.Film
+import com.example.mycinema.model.Film
 
 sealed class AppState {
     data class Success(val films: ArrayList<Film>) : AppState()
