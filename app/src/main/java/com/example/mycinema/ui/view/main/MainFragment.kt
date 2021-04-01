@@ -21,11 +21,13 @@ class MainFragment : Fragment() {
     private val binding
         get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-    private val adapter = MainFragmentAdapter(object : OnItemClickListener {
-        override fun onItemViewClick(film: Film) {
-            startFragmentDetails(film)
-        }
-    })
+    private val adapter by lazy {
+        MainFragmentAdapter(onItemClickListener)
+    }
+
+    private val onItemClickListener = fun (film:Film) {
+        startFragmentDetails(film)
+    }
 
     companion object {
         fun newInstance() = MainFragment()
@@ -61,7 +63,8 @@ class MainFragment : Fragment() {
         if (manager != null) {
             val bundle = Bundle()
             bundle.putParcelable(FragmentDetails.BUNDLE_EXTRA, film)
-            manager.beginTransaction().replace(R.id.container, FragmentDetails.newInstance(bundle)).addToBackStack("").commitAllowingStateLoss()
+            manager.beginTransaction().replace(R.id.container, FragmentDetails.newInstance(bundle))
+                .addToBackStack("").commitAllowingStateLoss()
         }
     }
 
@@ -83,9 +86,5 @@ class MainFragment : Fragment() {
                     .show()
             }
         }
-    }
-
-    interface OnItemClickListener {
-        fun onItemViewClick(film: Film)
     }
 }

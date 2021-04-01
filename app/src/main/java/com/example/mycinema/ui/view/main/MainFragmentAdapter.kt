@@ -9,7 +9,8 @@ import com.example.mycinema.R
 import com.example.mycinema.databinding.FragmentMainRecyclerItemBinding
 
 class MainFragmentAdapter(
-    private var onItemClickListener: MainFragment.OnItemClickListener?
+//    private var onItemClickListener: MainFragment.OnItemClickListener?
+private var onItemClickListener:((film: Film) -> Unit)?
 ) : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
     var filmsData: ArrayList<Film> = arrayListOf()
         set(value) {
@@ -43,7 +44,7 @@ class MainFragmentAdapter(
             binding.filmTitle.text = film.title
             binding.filmDescription.text = film.description
             itemView.setOnClickListener {
-                onItemClickListener?.onItemViewClick(film)
+                onItemClickListener?.invoke(film)
             }
         }
     }

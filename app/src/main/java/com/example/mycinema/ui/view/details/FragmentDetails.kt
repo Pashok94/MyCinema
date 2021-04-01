@@ -25,8 +25,11 @@ class FragmentDetails : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val film = arguments?.getParcelable<Film>(BUNDLE_EXTRA)
         if (film != null) {
-            binding.filmTitle.text = film.title
-            binding.filmDescription.text = film.description
+            binding.apply {
+                filmTitle.text = film.title
+                filmDescription.text = film.description
+                filmRating.text = film.rating.toString()
+            }
         }
     }
 
