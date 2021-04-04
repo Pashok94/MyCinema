@@ -42,7 +42,7 @@ private var onItemClickListener:((film: Film) -> Unit)?
 
         fun onBind(film: Film) {
             binding.filmTitle.text = film.title
-            binding.filmDescription.text = film.description
+            binding.filmDescription.text = film.overview
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(film)
             }
