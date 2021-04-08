@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.example.mycinema.model.Film
+import com.example.mycinema.model.Result
 import com.example.mycinema.databinding.FragmentFilmDetailsBinding
 import com.google.gson.Gson
 import java.io.BufferedReader
@@ -21,7 +21,7 @@ import java.net.URL
 import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
-private const val API_KEY = "8c8edb0d2bfa7286cf1ca894bf268ea5"
+const val API_KEY = "8c8edb0d2bfa7286cf1ca894bf268ea5"
 
 class FragmentDetails : Fragment() {
     private var _binding: FragmentFilmDetailsBinding? = null
@@ -54,7 +54,7 @@ class FragmentDetails : Fragment() {
                     urlConnection.readTimeout = 10_000
 
                     val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
-                    val film = Gson().fromJson(getLines(reader), Film::class.java)
+                    val film = Gson().fromJson(getLines(reader), Result::class.java)
                     handler.post{
                         displayFilms(film)
                     }
@@ -71,29 +71,17 @@ class FragmentDetails : Fragment() {
         }
     }
 
-    private fun displayFilms(film: Film){
+    private fun displayFilms(result: Result){
         with(binding){
-            filmTitle.text = film.title
-            filmDescription.text = film.overview
-            filmRating.text = film.vote_average.toString()
+            filmTitle.text = result.title
+            filmDescription.text = result.overview
+            filmRating.text = result.vote_average.toString()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun getLines(reader: BufferedReader): String {
         return reader.lines().collect(Collectors.joining("\n"))
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-//        val film = arguments?.getParcelable<Film>(BUNDLE_EXTRA)
-//        if (film != null) {
-////            binding.apply {
-////                filmTitle.text = film.title
-////                filmDescription.text = film.overview
-////                filmRating.text = film.vote_average.toString()
-////            }
-//        }
     }
 
     companion object {
@@ -106,8 +94,6 @@ class FragmentDetails : Fragment() {
     }
 
     private fun initId(){
-        val film = arguments?.getParcelable<Film>(BUNDLE_EXTRA)
-        if (film != null)
-            filmID = film.id
+        filmID = arguments?.getInt(BUNDLE_EXTRA) ?: 0
     }
 }

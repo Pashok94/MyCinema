@@ -1,34 +1,74 @@
 package com.example.mycinema.model
 
-object DB : Repository {
-    private val db: ArrayList<Film> = arrayListOf(
-        Film(550,"film1", "film description",  1f),
-        Film(200,"film2", "film description",  1f),
-        Film(300,"film3", "film description",  1f),
-        Film(400,"film4", "film description",  1f),
-        Film(500,"film5", "film description",  1f),
-        Film(600,"film6", "film description",  1f),
-        Film(800,"film7", "film description",  1f),
-        Film(850,"film8", "film description",  1f),
-        Film(900,"film9", "film description",  1f),
-        Film(150,"film10", "film description", 1f),
-        Film(110,"film11", "film description", 1f),
-        Film(120,"film12", "film description", 1f),
-        Film(130,"film13", "film description", 1f),
-        Film(140,"film14", "film description", 1f),
-        Film(155,"film15", "film description", 1f),
-        Film(160,"film16", "film description", 1f),
-        Film(170,"film17", "film description", 1f),
-        Film(180,"film18", "film description", 1f),
-        Film(190,"film19", "film description", 1f),
-        Film(250,"film20", "film description", 1f)
-    )
+import android.os.Build
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.util.Log
+import androidx.annotation.RequiresApi
+import com.example.mycinema.ui.view.details.API_KEY
+import com.google.gson.Gson
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.lang.Exception
+import java.net.MalformedURLException
+import java.net.URL
+import java.util.stream.Collectors
+import javax.net.ssl.HttpsURLConnection
 
-    override fun getFilmsFromServer(): ArrayList<Film> {
-        return db
+object DB : Repository {
+    private val handlerThread = HandlerThread("")
+    private val DB: ArrayList<Result> = arrayListOf()
+
+    init {
+        handlerThread.start()
     }
 
-    override fun getFilmsFromLocalStorage(): ArrayList<Film> {
-        return db
+    @RequiresApi(Build.VERSION_CODES.N)
+    override fun getFilmsFromServer(): ArrayList<Result> {
+        loadDataFromServer()
+        return DB
+    }
+
+    override fun getFilmsFromLocalStorage(): ArrayList<Result> {
+        return DB
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun loadDataFromServer() {
+        try {
+            val uri =
+                URL("https://api.themoviedb.org/3/movie/now_playing?api_key=$API_KEY&language=en-US&page=1")
+            val mainHandler = Handler(Looper.getMainLooper())
+            val loadHandlerThread = Handler(handlerThread.looper)
+            loadHandlerThread.post {
+                lateinit var urlConnection: HttpsURLConnection
+
+                try {
+                    urlConnection = uri.openConnection() as HttpsURLConnection
+                    urlConnection.readTimeout = 10_000
+
+                    val reader = BufferedReader(InputStreamReader(urlConnection.inputStream))
+                    val films = Gson().fromJson(getLines(reader), ListFilms::class.java)
+                    mainHandler.post {
+                        DB.clear()
+                        DB.addAll(films.results)
+                    }
+                } catch (e: Exception) {
+                    Log.e("", "Fail URI", e)
+                    e.printStackTrace()
+                } finally {
+                    urlConnection.disconnect()
+                }
+            }
+        } catch (e: MalformedURLException) {
+            Log.e("", "Fail URI", e)
+            e.printStackTrace()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    private fun getLines(reader: BufferedReader): String {
+        return reader.lines().collect(Collectors.joining("\n"))
     }
 }
