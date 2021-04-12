@@ -7,16 +7,19 @@
     android:layout_height="150dp">
 
     <TextView
-        android:background="@color/tv_background"
         android:id="@+id/film_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="119dp"
-        android:layout_marginTop="16dp"
+        android:background="@color/tv_background"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:maxWidth="230dp"
+        app:layout_constraintBottom_toTopOf="@+id/film_param"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/film_poster"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/film_param"
+        app:layout_constraintTop_toTopOf="@+id/film_poster"
+        app:layout_constraintVertical_bias="0.0"
         tools:text="Москва" />
 
     <ImageView
@@ -24,21 +27,20 @@
         android:layout_width="113dp"
         android:layout_height="117dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@string/film_poster"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_slideshow"
-        android:contentDescription="@string/film_poster" />
+        app:srcCompat="@android:drawable/ic_menu_slideshow" />
 
     <TextView
-        android:id="@+id/film_description"
-        android:layout_width="241dp"
-        android:layout_height="87dp"
+        android:id="@+id/film_param"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="80dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/tv_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.609"
-        app:layout_constraintStart_toEndOf="@+id/film_poster"
-        app:layout_constraintTop_toBottomOf="@+id/film_title"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintStart_toEndOf="@+id/film_poster" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycinema.AppState
-import com.example.mycinema.model.Film
+import com.example.mycinema.model.Result
 import com.example.mycinema.R
 import com.example.mycinema.databinding.MainFragmentBinding
 import com.example.mycinema.ui.view.MainViewModel
@@ -25,15 +25,17 @@ class MainFragment : Fragment() {
         MainFragmentAdapter(onItemClickListener)
     }
 
-    private val onItemClickListener = fun (film:Film) {
-        startFragmentDetails(film)
+    private val onItemClickListener = fun(result: Result) {
+        startFragmentDetails(result.id)
+    }
+
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     companion object {
         fun newInstance() = MainFragment()
     }
-
-    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +49,6 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         recyclerView = binding.rvMain
         recyclerView.adapter = adapter
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         val observer = Observer<AppState> { renderData(it) }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
     }
@@ -58,20 +59,18 @@ class MainFragment : Fragment() {
         adapter.removeListener()
     }
 
-    private fun startFragmentDetails(film: Film) {
-        val manager = activity?.supportFragmentManager
-        if (manager != null) {
-            val bundle = Bundle()
-            bundle.putParcelable(FragmentDetails.BUNDLE_EXTRA, film)
-            manager.beginTransaction().replace(R.id.container, FragmentDetails.newInstance(bundle))
-                .addToBackStack("").commitAllowingStateLoss()
-        }
+    private fun startFragmentDetails(filmId: Int) {
+        val manager = requireActivity().supportFragmentManager
+        val bundle = Bundle()
+        bundle.putInt(FragmentDetails.BUNDLE_EXTRA, filmId)
+        manager.beginTransaction().replace(R.id.container, FragmentDetails.newInstance(bundle))
+            .addToBackStack("").commitAllowingStateLoss()
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
-                adapter.filmsData = appState.films
+                adapter.filmsData = appState.results
                 binding.loadingLayout.visibility = View.GONE
                 Snackbar.make(binding.mainView, "Success", Snackbar.LENGTH_LONG).show()
             }

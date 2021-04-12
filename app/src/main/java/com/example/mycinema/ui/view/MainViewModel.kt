@@ -1,5 +1,6 @@
 package com.example.mycinema.ui.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,16 +19,18 @@ class MainViewModel(
         return liveData
     }
 
-    fun getFilmsFromLocalSourceRus() = getDataFromLocalSource()
+    fun getFilmsFromLocalSourceRus() = db.getFilmsFromLocalStorage()
 
-    fun getFilmsFromRemoteSource() = getDataFromLocalSource()
+    private fun getFilmsFromRemoteSource() = getDataFromLocalSource()
 
     private fun getDataFromLocalSource() {
         Thread {
+            db.getFilmsFromServer()
             liveData.postValue(AppState.Loading)
-            sleep(500)
+            while (db.getFilmsFromLocalStorage().isEmpty()) {
+                sleep(500)
+            }
             liveData.postValue(AppState.Success(db.getFilmsFromLocalStorage()))
-            sleep(500)
         }.start()
     }
 }
