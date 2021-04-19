@@ -1,6 +1,11 @@
-package com.example.mycinema.model
+package com.example.mycinema.model.room
 
-data class Result(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
+data class FilmsEntity(
+    @PrimaryKey
     val id: Int,
     val backdrop_path: String,
     val overview: String,
@@ -8,4 +13,4 @@ data class Result(
     val release_date: String,
     val title: String,
     val vote_average: Double
-    )
+)
