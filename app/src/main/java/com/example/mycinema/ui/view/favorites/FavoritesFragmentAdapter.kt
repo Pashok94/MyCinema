@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycinema.R
-import com.example.mycinema.databinding.FragmentFavoritesFilmsBinding
 import com.example.mycinema.databinding.FragmentMainRecyclerItemBinding
 import com.example.mycinema.model.Result
 

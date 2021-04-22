@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycinema.AppState
 import com.example.mycinema.databinding.FragmentFavoritesFilmsBinding
-import com.example.mycinema.ui.view.main.MainFragmentAdapter
-import com.google.android.material.snackbar.Snackbar
 
 class FragmentFavorites : Fragment() {
     private var _binding: FragmentFavoritesFilmsBinding? = null
