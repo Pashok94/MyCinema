@@ -2,4 +2,6 @@
     <string name="app_name">MyCinema</string>
     <string name="film_poster">film poster</string>
     <string name="addToFavorites">В избранное</string>
+    <string name="MainPage">Главная</string>
+    <string name="FavoritesPage">Избранные</string>
 </resources>

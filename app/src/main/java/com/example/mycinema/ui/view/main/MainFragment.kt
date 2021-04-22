@@ -1,6 +1,7 @@
 package com.example.mycinema.ui.view.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.mycinema.R
 import com.example.mycinema.databinding.MainFragmentBinding
 import com.example.mycinema.ui.view.MainViewModel
 import com.example.mycinema.ui.view.details.FragmentDetails
+import com.example.mycinema.ui.view.favorites.FragmentFavorites
 import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
@@ -23,6 +25,10 @@ class MainFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private val adapter by lazy {
         MainFragmentAdapter(onItemClickListener)
+    }
+
+    private val bottomNavigationMenu by lazy {
+        binding.bottomNavigation
     }
 
     private val onItemClickListener = fun(result: Result) {
@@ -42,6 +48,9 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
+
+        setOnBottomMenuItemSelectedListener()
+
         return binding.root
     }
 
@@ -60,11 +69,20 @@ class MainFragment : Fragment() {
     }
 
     private fun startFragmentDetails(filmId: Int) {
-        val manager = requireActivity().supportFragmentManager
         val bundle = Bundle()
         bundle.putInt(FragmentDetails.BUNDLE_EXTRA, filmId)
-        manager.beginTransaction().replace(R.id.container, FragmentDetails.newInstance(bundle))
-            .addToBackStack("").commitAllowingStateLoss()
+        startNewFragment(FragmentDetails.newInstance(bundle))
+    }
+
+    private fun startFragmentFavorites(){
+        val bundle = Bundle()
+        startNewFragment(FragmentFavorites.newInstance(bundle))
+    }
+
+    private fun startNewFragment(newInstanceFragment: Fragment){
+        val manager = requireActivity().supportFragmentManager
+        manager.beginTransaction().replace(R.id.container, newInstanceFragment)
+            .addToBackStack("").commit()
     }
 
     private fun renderData(appState: AppState) {
@@ -72,7 +90,6 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 adapter.filmsData = appState.results
                 binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.mainView, "Success", Snackbar.LENGTH_LONG).show()
             }
             is AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
@@ -83,6 +100,27 @@ class MainFragment : Fragment() {
                     .make(binding.mainView, "Error", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Reload") { viewModel.getFilmsFromLocalSourceRus() }
                     .show()
+            }
+        }
+    }
+
+    private fun setOnBottomMenuItemSelectedListener(){
+        bottomNavigationMenu.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.favorite_page -> {
+                    startFragmentFavorites()
+                    true
+                }
+                else -> false
+            }
+        }
+
+        bottomNavigationMenu.setOnNavigationItemReselectedListener {
+            when(it.itemId){
+                R.id.favorite_page -> {
+                    Log.d("=====", "reset favorite page!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                    startFragmentFavorites()
+                }
             }
         }
     }
