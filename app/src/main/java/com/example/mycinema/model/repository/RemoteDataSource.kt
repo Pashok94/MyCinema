@@ -1,6 +1,7 @@
 package com.example.mycinema.model.repository
 
 import com.example.mycinema.model.ListFilms
+import com.example.mycinema.model.Result
 import com.example.mycinema.ui.view.details.API_KEY
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -24,6 +25,10 @@ class RemoteDataSource {
 
     fun getListFilmsNowPlaying(page: Int, callback: Callback<ListFilms>){
         filmsApi.getPageFilms(API_KEY, "ru", page, "Ru").enqueue(callback)
+    }
+
+    fun getFilmById(id : Int, callback: Callback<Result >){
+        filmsApi.getFilmById(id, API_KEY, "ru").enqueue(callback)
     }
 
     private fun createOkHttpClient(interceptor: Interceptor): OkHttpClient {

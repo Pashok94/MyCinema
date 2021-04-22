@@ -7,5 +7,6 @@ import retrofit2.Callback
 interface Repository {
     fun getFilmsFromServer(page: Int, callback: Callback<ListFilms>)
     fun getFilmsFromLocalStorage(): ArrayList<Result>
-    fun getFilmByID(id: Int): Result?
+    fun saveEntity(film: Result)
+    fun getFilmById(id : Int, callback: Callback<Result>)
 }
